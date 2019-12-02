@@ -5,7 +5,6 @@ import (
 	"github.com/rs/zerolog"
 	"github.com/spf13/viper"
 	"os"
-	"strings"
 )
 
 var logger zerolog.Logger
@@ -37,7 +36,7 @@ func newConfig() (*viper.Viper, error) {
 }
 
 func newLogger(config *viper.Viper) zerolog.Logger {
-	logLevelStr := strings.ToLower(config.GetString("log_level"))
+	logLevelStr := config.GetString("log_level")
 	logLevel, err := zerolog.ParseLevel(logLevelStr)
 	if err != err {
 		panic(errors.Wrap(err, "parsing log_level failed"))

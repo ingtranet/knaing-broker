@@ -42,6 +42,7 @@ func (b *broker) handleTextMsg(msg *stan.Msg) error {
 }
 
 func (b *broker) run() error {
+	logger.Info().Msg("running msg broker...")
 	channel := b.config.GetString("msg_channel")
 	var err error
 	b.subscription, err = b.client.Subscribe(channel, b.callback)
