@@ -17,7 +17,7 @@ type broker struct {
 
 func (b *broker) callback(msg *stan.Msg) {
 	dec := msgpack.NewDecoder(bytes.NewBuffer(msg.Data))
-	msgType, err := dec.Query("")
+	msgType, err := dec.Query("*.message.type")
 	if err != nil {
 		return
 	}
