@@ -1,4 +1,4 @@
-FROM golang:1.13-alpine
+FROM golang:1.13
 
 ENV TINI_VERSION v0.18.0
 
