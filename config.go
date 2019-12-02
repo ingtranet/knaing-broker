@@ -8,6 +8,8 @@ import (
 	"strings"
 )
 
+var logger zerolog.Logger
+
 func newConfig() (*viper.Viper, error) {
 	config := viper.New()
 	config.SetDefault("log_level", "info")
@@ -23,7 +25,7 @@ func newConfig() (*viper.Viper, error) {
 
 	for _, e := range envs {
 		if err := config.BindEnv(e); err != nil {
-			return nil, errors.Wrap(err, "binding env failed: " + e)
+			return nil, errors.Wrap(err, "binding env failed: "+e)
 		}
 	}
 	for _, env := range envs {

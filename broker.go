@@ -3,6 +3,7 @@ package broker
 import (
 	"bytes"
 	"context"
+	"fmt"
 	"github.com/nats-io/stan.go"
 	"github.com/spf13/viper"
 	"github.com/vmihailenco/msgpack/v4"
@@ -17,6 +18,7 @@ type broker struct {
 
 func (b *broker) callback(msg *stan.Msg) {
 	dec := msgpack.NewDecoder(bytes.NewBuffer(msg.Data))
+	logger.Debug().Msg(fmt.Sprintf("handling msg from %s:%d...", msg.Subject, msg.Sequence))
 	msgType, err := dec.Query("*.message.type")
 	if err != nil {
 		return
@@ -31,6 +33,7 @@ func (b *broker) callback(msg *stan.Msg) {
 }
 
 func (b *broker) handleTextMsg(msg *stan.Msg) error {
+	logger.Debug().Msg("handling text msg...")
 	channel := b.config.GetString("text_channel")
 	if err := b.client.Publish(channel, msg.Data); err != nil {
 		return err

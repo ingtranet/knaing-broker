@@ -4,7 +4,6 @@ import (
 	"go.uber.org/fx"
 )
 
-
 func NewApp() *fx.App {
 	app := fx.New(
 		fx.Provide(
@@ -12,6 +11,9 @@ func NewApp() *fx.App {
 			newLogger,
 			newStanClient,
 			newBroker,
+		),
+		fx.Populate(
+			&logger,
 		),
 	)
 
