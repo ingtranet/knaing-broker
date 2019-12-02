@@ -1,0 +1,16 @@
+language: minimal
+dist: xenial
+
+jobs:
+  include:
+    - stage: deploy
+      if: branch IN (master, develop) OR tag IS present
+      script:
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker build -t ingtranet/knaing-broker:$TRAVIS_BRANCH .
+        - docker images
+        - docker push ingtranet/knaing-broker:$TRAVIS_BRANCH
+
+
+
+
