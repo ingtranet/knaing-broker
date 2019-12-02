@@ -59,7 +59,7 @@ func (b *broker) stop() error {
 }
 
 func newBroker(lc fx.Lifecycle, config *viper.Viper, client stan.Conn) (*broker, error) {
-	broker := broker{
+	broker := &broker{
 		client: client,
 		config: config,
 	}
@@ -73,5 +73,5 @@ func newBroker(lc fx.Lifecycle, config *viper.Viper, client stan.Conn) (*broker,
 		},
 	})
 
-	return &broker, nil
+	return broker, nil
 }
